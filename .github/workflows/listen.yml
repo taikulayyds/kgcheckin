@@ -15,5 +15,5 @@ jobs:
       - run: npm run install
       - run: npm run listen
         env:
-          USERNAME: ${{ secrets.USERNAME }}
-          PASSWORD: ${{ secrets.PASSWORD }}
+          TOKEN: ${{ secrets.TOKEN }}
+          USERID: ${{ secrets.USERID }}
