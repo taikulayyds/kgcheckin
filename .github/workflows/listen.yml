@@ -1,9 +1,9 @@
-name: login
+name: listen
 on:
   workflow_dispatch:
   # push:
   schedule:
-    - cron: 1 16 * * *
+    - cron: 4 16 * * *
 jobs:
   run:
     runs-on: ubuntu-latest
@@ -13,7 +13,7 @@ jobs:
         with:
           node-version: 18
       - run: npm run install
-      - run: npm run login
+      - run: npm run listen
         env:
           USERNAME: ${{ secrets.USERNAME }}
           PASSWORD: ${{ secrets.PASSWORD }}

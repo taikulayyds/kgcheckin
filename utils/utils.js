@@ -20,7 +20,7 @@ function startService() {
   })
   api.stderr.on('data', data => {
     console.log("服务启动失败")
-    throw data
+    throw new Error(`${data}`)
   })
   return api
 

@@ -1,7 +1,7 @@
 name: run
 on:
   workflow_dispatch:
-  push:
+  # push:
   schedule:
     - cron: 1 16 * * *
 jobs:
