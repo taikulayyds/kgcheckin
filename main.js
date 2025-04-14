@@ -12,8 +12,10 @@ async function main() {
   await delay(2000)
 
   let today = new Date();
+  // 服务器时间比国内慢8小时，获取第二天时间
+  today.setTime(today.getTime() + 24 * 60 * 60 * 1000)
   //日期
-  let DD = String(today.getDate() + 1).padStart(2, '0'); // 获取日
+  let DD = String(today.getDate()).padStart(2, '0'); // 获取日
   let MM = String(today.getMonth() + 1).padStart(2, '0'); //获取月份，1 月为 0
   let yyyy = today.getFullYear(); // 获取年份
   let date = yyyy + '-' + MM + '-' + DD
