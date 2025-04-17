@@ -1,7 +1,7 @@
 // 听歌领取vip 需要登录
 module.exports = (params, useAxios) => {
   const dataMap = {
-    mixsongid: 666075191
+    mixsongid: params?.mixsongid || 666075191
   }
 
   return useAxios({
