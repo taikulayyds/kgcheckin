@@ -1,4 +1,4 @@
-name: login
+name: sent
 on:
   workflow_dispatch:
   # push:
@@ -14,7 +14,6 @@ jobs:
         with:
           node-version: 18
       - run: npm run install
-      - run: npm run login
+      - run: npm run sent
         env:
           PHONE: ${{ secrets.PHONE }}
-          CODE: ${{ secrets.CODE }}

@@ -6,6 +6,7 @@
     "install": "cd api && npm ci",
     "apiService": "cd api && npm run start",
     "login": "node login.js",
-    "listen": "node listen.js"
+    "listen": "node listen.js",
+    "sent": "node sent.js"
   }
 }

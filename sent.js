@@ -3,28 +3,22 @@ import { close_api, delay, send, startService } from "./utils/utils.js";
 async function login() {
 
   let phone = process.env.PHONE
-  let code = process.env.CODE
 
-  if (!phone || !code) {
+  if (!phone) {
     throw new Error("参数错误！请检查")
   }
   // 启动服务
   let api = startService()
   await delay(2000)
 
+  console.log("开始发送验证码")
   try {
     // 登陆请求
-    let result = await send(`/login/cellphone?mobile=${phone}&code=${code}`, "GET", {})
+    let result = await send(`/captcha/sent?mobile=${phone}`, "GET", {})
     if (result.status === 1) {
-      console.log("登陆成功！")
-      console.log("第一行是token,第二行是userid")
-      console.log(result.data.token)
-      console.log(result.data.userid)
-    } else if (result.data == "请验证") {
-      throw new Error("哎呀，触发验证了，修改一下账号再登陆吧")
-    }
-    else {
-      throw new Error("登陆失败！请检查")
+      console.log("发送成功")
+    } else {
+      throw new Error("发送失败！请检查")
     }
   } catch (error) {
     throw error

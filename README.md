@@ -3,11 +3,16 @@
 GitHub Actions 实现 `酷狗概念VIP` 自动签到
 每天领取总计 `两天酷狗概念VIP`
 
+目前只能手机号登陆
+账号密码第一次登陆要验证，太垃圾
+
 ## 使用说明
 
 1. Fork 这个仓库
 
-1. 添加你的 `账号` 和 `密码` 到 Secret `USERNAME` `PASSWORD` (账号需要是用户名或手机号或`kgopen`+酷狗ID，登陆可能会有验证)
+1. 添加你的 `手机号` 到 Secret `PHONE`，运行 Actions `sent` 获取验证码
+
+1. 添加收到的 `验证码` 到 Secret `CODE`
 
 1. 在 Actions 运行 `login` 成功后复制 `token` 和 `userid`
 
