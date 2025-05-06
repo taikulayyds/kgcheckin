@@ -17,10 +17,13 @@ async function login() {
     let result = await send(`/login?username=${username}&password=${password}`, "GET", {})
     if (result.status === 1) {
       console.log("登陆成功！")
-      console.log("第一行是token,第二行是userid,直接复制即可,注意不要有空格")
+      console.log("第一行是token,第二行是userid")
       console.log(result.data.token)
       console.log(result.data.userid)
-    } else {
+    } else if (result.data == "请验证") {
+      throw new Error("哎呀，触发验证了，修改一下账号再登陆吧")
+    }
+    else {
       throw new Error("登陆失败！请检查")
     }
   } catch (error) {
