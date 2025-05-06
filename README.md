@@ -7,7 +7,7 @@ GitHub Actions 实现 `酷狗概念VIP` 自动签到
 
 1. Fork 这个仓库
 
-1. 添加你的 `账号` 和 `密码` 到 Secret `USERNAME` `PASSWORD` (账号需要是用户名或`kgopen`+酷狗ID，手机号可能会有验证)
+1. 添加你的 `账号` 和 `密码` 到 Secret `USERNAME` `PASSWORD` (账号需要是用户名或手机号或`kgopen`+酷狗ID，登陆可能会有验证)
 
 1. 在 Actions 运行 `login` 成功后复制 `token` 和 `userid`
 
