@@ -13,7 +13,7 @@ async function login() {
 
   console.log("开始发送验证码")
   try {
-    // 登陆请求
+    // 验证码请求
     let result = await send(`/captcha/sent?mobile=${phone}`, "GET", {})
     if (result.status === 1) {
       console.log("发送成功")

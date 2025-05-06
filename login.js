@@ -13,18 +13,18 @@ async function login() {
   await delay(2000)
 
   try {
-    // 登陆请求
+    // 登录请求
     let result = await send(`/login/cellphone?mobile=${phone}&code=${code}`, "GET", {})
     if (result.status === 1) {
-      console.log("登陆成功！")
+      console.log("登录成功！")
       console.log("第一行是token,第二行是userid")
       console.log(result.data.token)
       console.log(result.data.userid)
     } else if (result.data == "请验证") {
-      throw new Error("哎呀，触发验证了，修改一下账号再登陆吧")
+      throw new Error("触发验证")
     }
     else {
-      throw new Error("登陆失败！请检查")
+      throw new Error("登录失败！请检查")
     }
   } catch (error) {
     throw error
