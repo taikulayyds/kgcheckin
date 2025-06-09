@@ -26,6 +26,10 @@ async function main() {
     let res = await send("/login/token", "GET", headers)
     if (res.status == 1) {
       console.log("token刷新成功")
+    } else {
+      console.log("响应内容")
+      console.dir(res, { depth: null })
+      throw new Error("token刷新失败")
     }
     // 开始签到
     for (let i = 1; i <= 8; i++) {
@@ -36,6 +40,8 @@ async function main() {
       if (cr.status === 1) {
         console.log("签到成功")
       } else {
+        console.log("响应内容")
+        console.dir(cr, { depth: null })
         throw new Error("签到失败：" + cr.error_msg)
       }
       if (i != 8) {
@@ -48,6 +54,8 @@ async function main() {
       console.log(`今天是：${date}`)
       console.log(`VIP到期时间：${vip_details.data.busi_vip[0].vip_end_time}`)
     } else {
+      console.log("响应内容")
+      console.dir(vip_details, { depth: null })
       throw new Error("获取失败")
     }
   } catch (error) {

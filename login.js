@@ -21,9 +21,13 @@ async function login() {
       console.log(result.data.token)
       console.log(result.data.userid)
     } else if (result.data == "请验证") {
+      console.log("响应内容")
+      console.dir(result, { depth: null })
       throw new Error("触发验证")
     }
     else {
+      console.log("响应内容")
+      console.dir(result, { depth: null })
       throw new Error("登录失败！请检查")
     }
   } catch (error) {

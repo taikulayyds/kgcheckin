@@ -30,6 +30,8 @@ async function main() {
     if (cr.status === 1) {
       console.log("听歌签到成功")
     } else {
+      console.log("响应内容")
+      console.dir(cr, { depth: null })
       throw new Error("听歌签到失败：" + cr.error_code)
     }
 
@@ -38,6 +40,8 @@ async function main() {
       console.log(`今天是：${date}`)
       console.log(`VIP到期时间：${vip_details.data.busi_vip[0].vip_end_time}`)
     } else {
+      console.log("响应内容")
+      console.dir(vip_details, { depth: null })
       throw new Error("获取失败")
     }
   } catch (error) {

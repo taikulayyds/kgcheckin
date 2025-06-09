@@ -18,6 +18,8 @@ async function login() {
     if (result.status === 1) {
       console.log("发送成功")
     } else {
+      console.log("响应内容")
+      console.dir(result, { depth: null })
       throw new Error("发送失败！请检查")
     }
   } catch (error) {
