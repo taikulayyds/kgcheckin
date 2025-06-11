@@ -11,7 +11,7 @@ async function qrcode() {
     let result = await send(`/login/qr/key`, "GET", {})
     if (result.status === 1) {
       console.log("请求成功！")
-      console.log("第一行是key,第二行是二维码")
+      console.log("第一行是key,第二行是二维码链接")
       console.log(result.data.qrcode)
       console.log(result.data.qrcode_img)
     } else {
