@@ -22,7 +22,7 @@ async function login() {
   try {
     if (qrLogin) {
       const res = await send(`/login/qr/check?key=${key}`, "GET", {})
-      switch (res.status) {
+      switch (res?.data?.status) {
         case 0:
           console.log("二维码已过期")
           break;
