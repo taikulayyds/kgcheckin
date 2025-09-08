@@ -1,7 +1,7 @@
-# 酷狗签到
+# 酷狗概念版签到
 
-GitHub Actions 实现 `酷狗概念VIP` 自动签到
-每天领取总计 `两天酷狗概念VIP`
+GitHub Actions 实现 `酷狗概念版VIP` 自动签到
+每天领取总计 `两天酷狗概念版VIP`
 
 支持手机号登录(一个手机号绑定多个账号无法登录,见 [多账号登录问题](https://github.com/MakcRe/KuGouMusicApi/issues/51))和二维码登录(推荐)
 
