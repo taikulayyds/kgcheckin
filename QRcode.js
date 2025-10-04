@@ -19,8 +19,6 @@ async function qrcode() {
       console.dir(result, { depth: null })
       throw new Error("请求失败！请检查")
     }
-  } catch (error) {
-    throw error
   } finally {
     close_api(api)
   }

@@ -16,7 +16,7 @@ async function login() {
     throw new Error("参数错误！请检查")
   }
   // 启动服务
-  let api = startService()
+  const api = startService()
   await delay(2000)
 
   try {
@@ -49,25 +49,20 @@ async function login() {
 
     } else {
       // 手机号登录请求
-      let result = await send(`/login/cellphone?mobile=${phone}&code=${code}`, "GET", {})
+      const result = await send(`/login/cellphone?mobile=${phone}&code=${code}`, "GET", {})
       if (result.status === 1) {
         console.log("登录成功！")
         console.log("第一行是token,第二行是userid")
         console.log(result.data.token)
         console.log(result.data.userid)
-      } else if (result.data == "请验证") {
-        console.log("响应内容")
-        console.dir(result, { depth: null })
-        throw new Error("触发验证")
-      }
-      else {
+      } else if (result.error_code === 34175) {
+        throw new Error("暂不支持多账号绑定手机登录")
+      } else {
         console.log("响应内容")
         console.dir(result, { depth: null })
         throw new Error("登录失败！请检查")
       }
     }
-  } catch (error) {
-    throw error
   } finally {
     close_api(api)
   }

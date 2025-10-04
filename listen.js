@@ -1,17 +1,17 @@
 import { close_api, delay, send, startService } from "./utils/utils.js";
 
 async function main() {
-  let t = process.env.TOKEN
-  let uid = process.env.USERID
+  const t = process.env.TOKEN
+  const uid = process.env.USERID
 
   if (!t || !uid) {
     throw new Error("参数错误！请检查")
   }
   // 启动服务
-  let api = startService()
+  const api = startService()
   await delay(2000)
 
-  let today = new Date();
+  const today = new Date();
   // 服务器时间比国内慢8小时
   today.setTime(today.getTime() + 8 * 60 * 60 * 1000)
   //日期
@@ -44,8 +44,6 @@ async function main() {
       console.dir(vip_details, { depth: null })
       throw new Error("获取失败")
     }
-  } catch (error) {
-    throw error
   } finally {
     close_api(api)
   }

@@ -1,3 +1,6 @@
+> [!CAUTION]
+> 这个是克隆项目，原项目地址在 [kgcheckin](https://github.com/develop202/kgcheckin.git)
+
 # 酷狗签到
 
 GitHub Actions 实现 `酷狗概念VIP` 自动签到
@@ -5,12 +8,12 @@ GitHub Actions 实现 `酷狗概念VIP` 自动签到
 
 提供二维码登录(推荐)和手机号登录(一个手机号绑定多个账号无法登录,见 [多账号登录问题](https://github.com/MakcRe/KuGouMusicApi/issues/51))
 
-> [!important]
+> [!warning]
+> 注意事项
 >
 > 1. 登录每2个月会过期一次，过期后需要重新登录才可继续签到。
-> 1. 新版APP会有领取未来会员时长的活动，如果领取了listen就会签到失败。
-> 1. 使用本仓库后，不要在APP天天签到领VIP处领畅听VIP！！！
-> 1. 可以只在APP听歌，不领取VIP相关的奖励，减少对签到的影响。
+> 1. 若登录后listen签到失败，可以到APP 活动中心->天天签到领VIP 查看当日是否已经领取VIP(新版APP的领取未来会员时长的活动不要领)。运行成功后就不要在APP签到。
+> 1. 可以只在APP听歌，不领取VIP相关的奖励，减少对签到的影响(鬼知道官方后续会推出什么奇葩活动)。
 > 1. 下面是部分已知错误码
 >
 > | 错误码 | 描述       |
@@ -36,15 +39,19 @@ GitHub Actions 实现 `酷狗概念VIP` 自动签到
 
 两种登录方式任选其一，同时使用两种登录则优先二维码登录
 
-1. Fork 这个仓库
+1. Fork 本仓库
 
-1. 二维码登录：在 `Actions` 运行 `qrcode` 获取key和二维码链接，把key添加到 Secret `KEY` （什么？不知道 Secret在哪？[点我](#secret)），复制二维码链接到浏览器打开，用酷狗概念版扫描并确认登录
+1. 登录方式
 
-1. 手机号登录：添加你的 `手机号` 到 Secret `PHONE`，运行 Actions `sent` 获取验证码，添加收到的 `验证码` 到 Secret `CODE`
+   2.1 二维码(推荐)
 
-1. 在 Actions 运行 `login` 成功后复制 `token` 和 `userid`
+   运行 Actions `QRcode` 成功后复制key和二维码链接，二维码链接粘到浏览器打开，用酷狗概念版扫描并确认登录(二维码过期较快，请尽快扫码确认)。确认登录后把key添加到 Secret `KEY` （什么？不知道 Secret在哪？[点我](#secret)）
 
-1. 添加 `token` 和 `userid` 到 Secret `TOKEN` `USERID`
+   2.2 手机号
+
+   添加手机号到 Secret `PHONE`，运行 Actions `sent` 获取验证码，添加收到的验证码到 Secret `CODE`
+
+1. 运行 Actions `login` 成功后复制 `token` 和 `userid`并添加到 Secret `TOKEN` `USERID`
 
 1. 启用 Actions `run` 和 `listen`, 每天北京时间 00:01 自动签到
 

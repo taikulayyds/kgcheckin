@@ -1,29 +1,29 @@
 import { close_api, delay, send, startService } from "./utils/utils.js";
 
 async function main() {
-  let t = process.env.TOKEN
-  let uid = process.env.USERID
+  const t = process.env.TOKEN
+  const uid = process.env.USERID
 
   if (!t || !uid) {
     throw new Error("参数错误！请检查")
   }
   // 启动服务
-  let api = startService()
+  const api = startService()
   await delay(2000)
 
-  let today = new Date();
+  const today = new Date();
   // 服务器时间比国内慢8小时
   today.setTime(today.getTime() + 8 * 60 * 60 * 1000)
   //日期
-  let DD = String(today.getDate()).padStart(2, '0'); // 获取日
-  let MM = String(today.getMonth() + 1).padStart(2, '0'); //获取月份，1 月为 0
-  let yyyy = today.getFullYear(); // 获取年份
-  let date = yyyy + '-' + MM + '-' + DD
+  const DD = String(today.getDate()).padStart(2, '0'); // 获取日
+  const MM = String(today.getMonth() + 1).padStart(2, '0'); //获取月份，1 月为 0
+  const yyyy = today.getFullYear(); // 获取年份
+  const date = yyyy + '-' + MM + '-' + DD
 
-  let headers = { 'cookie': 'token=' + t + '; userid=' + uid }
+  const headers = { 'cookie': 'token=' + t + '; userid=' + uid }
   try {
     // 刷新令牌
-    let res = await send("/login/token", "GET", headers)
+    const res = await send("/login/token", "GET", headers)
     if (res.status == 1) {
       console.log("token刷新成功")
     } else {
@@ -35,7 +35,7 @@ async function main() {
     for (let i = 1; i <= 8; i++) {
       console.log(`开始第${i}次签到`)
       // 签到获取vip
-      let cr = await send("/youth/vip", "GET", headers)
+      const cr = await send("/youth/vip", "GET", headers)
 
       if (cr.status === 1) {
         console.log("签到成功")
@@ -49,7 +49,7 @@ async function main() {
       }
     }
 
-    let vip_details = await send("/user/vip/detail", "GET", headers)
+    const vip_details = await send("/user/vip/detail", "GET", headers)
     if (vip_details.status === 1) {
       console.log(`今天是：${date}`)
       console.log(`VIP到期时间：${vip_details.data.busi_vip[0].vip_end_time}`)
@@ -58,8 +58,6 @@ async function main() {
       console.dir(vip_details, { depth: null })
       throw new Error("获取失败")
     }
-  } catch (error) {
-    throw error
   } finally {
     close_api(api)
   }
