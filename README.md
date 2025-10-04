@@ -1,6 +1,3 @@
-> [!CAUTION]
-> 这个是克隆项目，原项目地址在 [kgcheckin](https://github.com/develop202/kgcheckin.git)
-
 # 酷狗签到
 
 GitHub Actions 实现 `酷狗概念VIP` 自动签到
