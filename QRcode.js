@@ -13,7 +13,12 @@ async function qrcode() {
       console.log("请求成功！")
       console.log("第一行是key,第二行是二维码链接")
       console.log(result.data.qrcode)
-      console.log(result.data.qrcode_img)
+      // console.log(result.data.qrcode_img)
+      const img_base64 = result.data.qrcode_img;
+      const chunkSize = 1000;
+      for (let i = 0; i < img_base64.length; i += chunkSize) {
+        console.log(img_base64.slice(i, i + chunkSize));
+      }
     } else {
       console.log("响应内容")
       console.dir(result, { depth: null })
