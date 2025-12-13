@@ -9,12 +9,27 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
+      - name: 检出仓库
+        uses: actions/checkout@v3
+      - name: 创建node
+        uses: actions/setup-node@v3
         with:
           node-version: 18
-      - run: npm run install
-      - run: npm run listen
+          cache: 'npm'
+          cache-dependency-path: ./api/package-lock.json
+      - name: Cache node_modules in api directory
+        id: cache-npm
+        uses: actions/cache@v3
+        with:
+          path: ./api/node_modules
+          key: ${{ runner.os }}-node-${{ hashFiles('./api/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+      - name: 安装依赖
+        run: npm run install
+        if: ${{ steps.cache-npm.outputs.cache-hit != 'true' }}
+      - name: 听歌签到
+        run: npm run listen
         env:
           TOKEN: ${{ secrets.TOKEN }}
           USERID: ${{ secrets.USERID }}
