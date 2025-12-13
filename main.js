@@ -45,7 +45,7 @@ async function main() {
         throw new Error("签到失败：" + cr.error_msg)
       }
       if (i != 8) {
-        await delay(5 * 60 * 1000)
+        await delay(2 * 60 * 1000)
       }
     }
 
