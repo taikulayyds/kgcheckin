@@ -1,4 +1,4 @@
-name: QRcode
+name: phoneLogin
 on:
   workflow_dispatch:
   # push:
@@ -28,5 +28,8 @@ jobs:
       - name: 安装依赖
         run: npm run install
         if: ${{ steps.cache-npm.outputs.cache-hit != 'true' }}
-      - name: 生成二维码
-        run: npm run qrcode
+      - name: 手机号登录
+        run: npm run login
+        env:
+          PHONE: ${{ secrets.PHONE }}
+          CODE: ${{ secrets.CODE }}

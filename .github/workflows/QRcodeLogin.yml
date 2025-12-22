@@ -1,4 +1,4 @@
-name: login
+name: QRcodeLogin
 on:
   workflow_dispatch:
   # push:
@@ -7,7 +7,7 @@ on:
 jobs:
   run:
     runs-on: ubuntu-latest
-    timeout-minutes: 2
+    timeout-minutes: 3
     steps:
       - name: 检出仓库
         uses: actions/checkout@v3
@@ -28,9 +28,5 @@ jobs:
       - name: 安装依赖
         run: npm run install
         if: ${{ steps.cache-npm.outputs.cache-hit != 'true' }}
-      - name: 登录
-        run: npm run login
-        env:
-          PHONE: ${{ secrets.PHONE }}
-          CODE: ${{ secrets.CODE }}
-          KEY: ${{ secrets.KEY }}
+      - name: 二维码登录
+        run: npm run qrcode

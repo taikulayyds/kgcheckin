@@ -28,23 +28,21 @@ GitHub Actions 实现 `酷狗概念VIP` 自动签到
 
 1. Fork 本仓库
 
-1. 登录方式
+1. 登录
 
    2.1 二维码(推荐)
 
-   运行 Actions `QRcode` 成功后复制key和二维码链接，二维码链接粘到浏览器打开，用酷狗概念版扫描并确认登录(二维码过期较快，请尽快扫码确认)。确认登录后把key添加到 Secret `KEY` （什么？不知道 Secret在哪？[点我](#secret)）
+   运行 Actions `QRcodeLogin` 并进入(若不显示,可以刷新页面)，点击run -> 展开二维码登录, 根据提示操作即可。最后把 `token` 和 `userid`添加到 Secret `TOKEN` `USERID`。
 
    2.2 手机号
 
-   添加手机号到 Secret `PHONE`，运行 Actions `sent` 获取验证码，添加收到的验证码到 Secret `CODE`
+   添加手机号到 Secret `PHONE`，运行 Actions `sent` 获取验证码，把验证码添加到 Secret `CODE`;运行Actions `phoneLogin`，把 `token` 和 `userid`添加到 Secret `TOKEN` `USERID`
 
-1. 运行 Actions `login` 成功后复制 `token` 和 `userid`并添加到 Secret `TOKEN` `USERID`
-
-1. 启用 Actions `run` 和 `listen`, 每天北京时间 00:01 自动签到
+1. 启用 Actions `run` 和 `listen`(默认启用), 每天北京时间 00:01 自动签到
 
 API源代码来自 [MakcRe/KuGouMusicApi](https://github.com/MakcRe/KuGouMusicApi) ~~图省事直接搬来~~
 
-## Secret
+## Secret 位置
 
 1. 步骤一
    ![步骤一](./imgs/步骤一.jpg)
