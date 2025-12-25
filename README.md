@@ -15,12 +15,12 @@ GitHub Actions 实现 `酷狗概念VIP` 自动签到
 > 1. 可以只在APP听歌，不领取VIP相关的奖励，减少对签到的影响(鬼知道官方后续会推出什么奇葩活动)。
 > 1. 下面是部分已知错误码
 >
-> | 错误码 | 描述       |
-> | ------ | ---------- |
-> | 51002  | 未登录     |
-> | 20018  | 未登录     |
-> | 130012 | 已领取     |
-> | 30002  | 次数已用光 |
+> > | 错误码 | 描述       |
+> > | ------ | ---------- |
+> > | 51002  | 未登录     |
+> > | 20018  | 未登录     |
+> > | 130012 | 已领取     |
+> > | 30002  | 次数已用光 |
 
 ## 使用说明
 
@@ -32,13 +32,23 @@ GitHub Actions 实现 `酷狗概念VIP` 自动签到
 
    2.1 二维码(推荐)
 
-   运行 Actions `QRcodeLogin` 并进入(若不显示,可以刷新页面)，点击run -> 展开二维码登录, 根据提示操作即可。最后把 `token` 和 `userid`添加到 Secret `TOKEN` `USERID`。
+   运行 Actions `QRcodeLogin` 并进入(若不显示,可以刷新页面)，点击run -> 展开二维码登录, 根据提示操作即可。复制 `token` 和 `userid`
 
    2.2 手机号
 
-   添加手机号到 Secret `PHONE`，运行 Actions `sent` 获取验证码，把验证码添加到 Secret `CODE`;运行Actions `phoneLogin`，把 `token` 和 `userid`添加到 Secret `TOKEN` `USERID`
+   添加手机号到 Secret `PHONE`，运行 Actions `sent` 获取验证码，把验证码添加到 Secret `CODE`;运行Actions `phoneLogin`，复制 `token` 和 `userid`
 
-1. 启用 Actions `run` 和 `listen`(默认启用), 每天北京时间 00:01 自动签到
+1. 把`userid` 和 `token` 添加到 Secret `USERINFO` 格式如下
+
+   > ```json
+   > [
+   >   { "userid": "写入id", "token": "写入token" },
+   >   // 其他账号信息 注意删掉此行
+   >   { "userid": "写入id", "token": "写入token" }
+   > ]
+   > ```
+
+1. 启用 Actions `main` (默认启用), 每天北京时间 00:01 自动签到
 
 API源代码来自 [MakcRe/KuGouMusicApi](https://github.com/MakcRe/KuGouMusicApi) ~~图省事直接搬来~~
 

@@ -1,4 +1,4 @@
-name: run
+name: main
 on:
   workflow_dispatch:
   # push:
@@ -31,5 +31,4 @@ jobs:
       - name: 签到
         run: npm run main
         env:
-          TOKEN: ${{ secrets.TOKEN }}
-          USERID: ${{ secrets.USERID }}
+          USERINFO: ${{ secrets.USERINFO }}

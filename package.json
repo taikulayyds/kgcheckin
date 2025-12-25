@@ -5,9 +5,8 @@
     "main": "node main.js",
     "install": "cd api && npm ci",
     "apiService": "cd api && npm run start",
-    "login": "node login.js",
-    "listen": "node listen.js",
+    "phoneLogin": "node phoneLogin.js",
     "sent": "node sent.js",
-    "qrcode": "node QRcode.js"
+    "qrcodeLogin": "node qrcodeLogin.js"
   }
 }
