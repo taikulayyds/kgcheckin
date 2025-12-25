@@ -1,3 +1,4 @@
+import { printBlue, printGreen, printMagenta, printRed, printYellow } from "./utils/colorOut.js";
 import { close_api, delay, send, startService } from "./utils/utils.js";
 
 async function main() {
@@ -27,32 +28,32 @@ async function main() {
     for (const user of userinfo) {
       const headers = { 'cookie': 'token=' + user.token + '; userid=' + user.userid }
       const userDetail = await send(`/user/detail?timestrap=${Date.now()}`, "GET", headers)
-      console.log(`账号 ${userDetail?.data?.nickname} 开始领取VIP...`)
+      printMagenta(`账号 ${userDetail?.data?.nickname} 开始领取VIP...`)
 
       // 开始听歌
-      console.log(`开始每日听歌领取VIP...`)
+      printYellow(`开始每日听歌领取VIP...`)
       // 听歌获取vip
       let listen = await send(`/youth/listen/song?timestrap=${Date.now()}`, "GET", headers)
 
       if (listen.status === 1) {
-        console.log("每日听歌领取成功")
+        printGreen("每日听歌领取成功")
       } else {
         errorMsg[userDetail?.data?.nickname + " listen"] = listen
-        console.log("每日听歌领取失败")
+        printRed("每日听歌领取失败")
       }
 
-      console.log("开始领取VIP...")
+      printYellow("开始领取VIP...")
       for (let i = 1; i <= 8; i++) {
         // 签到获取vip
         const ad = await send(`/youth/vip?timestrap=${Date.now()}`, "GET", headers)
 
         if (ad.status === 1) {
-          console.log(`第${i}次领取成功`)
+          printGreen(`第${i}次领取成功`)
           if (i != 8) {
             await delay(30 * 1000)
           }
         } else {
-          console.log(`第${i}次领取失败`)
+          printRed(`第${i}次领取失败`)
           errorMsg[userDetail?.data?.nickname + " ad"] = ad
           break
         }
@@ -60,10 +61,10 @@ async function main() {
 
       const vip_details = await send(`/user/vip/detail?timestrap=${Date.now()}`, "GET", headers)
       if (vip_details.status === 1) {
-        console.log(`今天是：${date}`)
-        console.log(`VIP到期时间：${vip_details.data.busi_vip[0].vip_end_time}\n`)
+        printBlue(`今天是：${date}`)
+        printBlue(`VIP到期时间：${vip_details.data.busi_vip[0].vip_end_time}\n`)
       } else {
-        console.log("获取失败\n")
+        printRed("获取失败\n")
         errorMsg[userDetail?.data?.nickname + " vip_details"] = vip_details
       }
     }
@@ -71,9 +72,9 @@ async function main() {
     close_api(api)
   }
   if (Object.keys(errorMsg).length > 0) {
-    console.log("异常信息如下:")
+    printRed("异常信息如下:")
     console.dir(errorMsg, { depth: null })
-    throw new Error("签到异常")
+    throw new Error("领取异常")
   }
 
   if (api.killed) {

@@ -38,7 +38,7 @@ GitHub Actions 实现 `酷狗概念VIP` 自动签到
 
    添加手机号到 Secret `PHONE`，运行 Actions `sent` 获取验证码，把验证码添加到 Secret `CODE`;运行Actions `phoneLogin`，复制 `token` 和 `userid`
 
-1. 把`userid` 和 `token` 添加到 Secret `USERINFO` 格式如下
+1. 把`userid` 和 `token` 添加到 Secret `USERINFO` 格式如下, 注意删掉换行
 
    > ```json
    > [
