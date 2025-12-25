@@ -1,29 +1,29 @@
 function basePrint(color, msg) {
-  console.log(`${color}%s\x1B[0m`,  msg)
+  console.log(`%c${msg}`, `color: ${color}`)
 }
 
 function printRed(msg) {
-  basePrint("\x1B[31m", msg)
+  basePrint("red", msg)
 }
 
 function printGreen(msg) {
-  basePrint("\x1B[32m", msg)
+  basePrint("green", msg)
 }
 
 function printYellow(msg) {
-  basePrint("\x1B[33m", msg)
+  basePrint("yellow", msg)
 }
 
 function printBlue(msg) {
-  basePrint("\x1B[34m", msg)
+  basePrint("blue", msg)
 }
 
 function printMagenta(msg) {
-  basePrint("\x1B[35m", msg)
+  basePrint("magenta", msg)
 }
 
 function printGrey(msg) {
-  basePrint("\x1B[2m", msg)
+  basePrint("grey", msg)
 }
 
 export {

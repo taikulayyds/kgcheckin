@@ -1,4 +1,4 @@
-import { printGreen, printGrey, printMagenta, printRed, printYellow } from "./utils/colorOut.js";
+import { printBlue, printGreen, printGrey, printMagenta, printRed, printYellow } from "./utils/colorOut.js";
 import { close_api, delay, send, startService } from "./utils/utils.js";
 
 async function main() {
@@ -28,7 +28,7 @@ async function main() {
     for (const user of userinfo) {
       const headers = { 'cookie': 'token=' + user.token + '; userid=' + user.userid }
       const userDetail = await send(`/user/detail?timestrap=${Date.now()}`, "GET", headers)
-      console.log(`账号${userDetail?.data?.nickname}开始领取VIP...`)
+      printMagenta(`账号 ${userDetail?.data?.nickname} 开始领取VIP...`)
 
       // 开始听歌
       printYellow(`开始每日听歌领取VIP...`)
@@ -58,7 +58,7 @@ async function main() {
           break
         }
       }
-      printMagenta(`VIP信息:`)
+      printBlue(`VIP信息:`)
 
       const vip_details = await send(`/user/vip/detail?timestrap=${Date.now()}`, "GET", headers)
       if (vip_details.status === 1) {
@@ -73,6 +73,7 @@ async function main() {
     close_api(api)
   }
   if (Object.keys(errorMsg).length > 0) {
+    printRed("异常信息如下:")
     console.dir(errorMsg, { depth: null })
     throw new Error("签到异常")
   }
