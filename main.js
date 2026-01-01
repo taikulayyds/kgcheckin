@@ -33,7 +33,7 @@ async function main() {
       // 开始听歌
       printYellow(`开始每日听歌领取VIP...`)
       // 听歌获取vip
-      let listen = await send(`/youth/listen/song?timestrap=${Date.now()}`, "GET", headers)
+      const listen = await send(`/youth/listen/song?timestrap=${Date.now()}`, "GET", headers)
 
       if (listen.status === 1) {
         printGreen("每日听歌领取成功")

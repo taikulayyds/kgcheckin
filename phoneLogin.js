@@ -7,7 +7,7 @@ async function login() {
 
   // 不使用二维码登录并且没有手机号或验证码
   if (!phone || !code) {
-    throw new Error("参数错误！请检查")
+    throw new Error("未配置")
   }
   // 启动服务
   const api = startService()

@@ -6,6 +6,7 @@ GitHub Actions 实现 `酷狗概念VIP` 自动签到
 提供二维码登录(推荐)和手机号登录(一个手机号绑定多个账号无法登录,见 [多账号登录问题](https://github.com/MakcRe/KuGouMusicApi/issues/51))
 
 感谢 [@itfw](https://github.com/itfw) 提供二维码显示问题的解决方案
+感谢 [@klaas8](https://github.com/klaas8) 提供自动写入secret的方法
 
 > [!warning]
 > 注意事项
@@ -31,14 +32,28 @@ GitHub Actions 实现 `酷狗概念VIP` 自动签到
 1. 登录
 
    2.1 二维码(推荐)
+   自动写入secret(可选)
+   - **创建令牌**  
+     复制下方官网链接，在浏览器中打开
 
-   运行 Actions `QRcodeLogin` 并进入(若不显示,可以刷新页面)，点击run -> 展开二维码登录, 根据提示操作即可。复制 `token` 和 `userid`
+     ```
+     https://github.com/settings/tokens/new
+     ```
+
+   - **登录 GitHub 官网**  
+     若登陆后未跳转至token生成页，请再次粘贴链接进行访问
+   - **在设置页面配置权限**  
+     **Note 备注**：随意填写  
+     **Expiration (有效期)**：建议选择 "No expiration" 永不过期或自定义时间  
+     **Select scopes (权限)**：所有勾选框都打勾
+   - 滑动到底部，点击绿色的 Generate token 保存按钮
+   - 复制生成的字符串 (ghp\_开头)，回到本仓库添加到`Secret` 变量名 `PAT` value `复制的令牌`
+
+   填入登录账号数量，运行 Actions `qrcodeLogin` 并进入(若不显示,可以刷新页面)，点击run -> 展开二维码登录, 根据提示操作即可。
 
    2.2 手机号
 
-   添加手机号到 Secret `PHONE`，运行 Actions `sent` 获取验证码，把验证码添加到 Secret `CODE`;运行Actions `phoneLogin`，复制 `token` 和 `userid`
-
-1. 把`userid` 和 `token` 添加到 Secret `USERINFO` 格式如下, 注意删掉换行
+   添加手机号到 Secret `PHONE`，运行 Actions `sent` 获取验证码，把验证码添加到 Secret `CODE`；运行Actions `phoneLogin`，复制 `token` 和 `userid` 添加到 Secret `USERINFO`，格式如下, 注意删去换行，否则会多出一些字符，但是不影响签到
 
    > ```json
    > [
