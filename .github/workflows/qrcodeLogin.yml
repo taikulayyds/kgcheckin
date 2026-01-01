@@ -19,7 +19,6 @@ jobs:
           cache: 'npm'
           cache-dependency-path: ./api/package-lock.json
       - name: 🔧 安装GitHub CLI，并使用PAT登录
-        if: ${{ secrets.PAT != '' }}
         run: |
           curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | sudo dd of=/usr/share/keyrings/githubcli-archive-keyring.gpg
           sudo chmod go+r /usr/share/keyrings/githubcli-archive-keyring.gpg
