@@ -49,7 +49,7 @@ GitHub Actions 实现 `酷狗概念VIP` 自动签到
    - 滑动到底部，点击绿色的 Generate token 保存按钮
    - 复制生成的字符串 (ghp\_开头)，回到本仓库添加到`Secret` 变量名 `PAT` value `复制的令牌`
 
-   填入登录账号数量，运行 Actions `qrcodeLogin` 并进入(若不显示,可以刷新页面)，点击run -> 展开二维码登录, 根据提示操作即可。
+   运行 Actions `qrcodeLogin` 并进入(若不显示,可以刷新页面)，点击run -> 展开二维码登录, 根据提示操作即可。
 
    2.2 手机号
 
