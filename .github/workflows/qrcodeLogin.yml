@@ -1,4 +1,4 @@
-name: QRcodeLogin
+name: qrcodeLogin
 on:
   workflow_dispatch:
     inputs:
