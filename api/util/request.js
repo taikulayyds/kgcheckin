@@ -3,6 +3,7 @@ const { cryptoMd5 } = require('./crypto');
 const { signKey, signatureAndroidParams, signatureRegisterParams, signatureWebParams } = require('./helper');
 const { parseCookieString } = require('./util');
 const { appid, clientver, liteAppid, liteClientver } = require('./config.json');
+const { resolveProxy } = require('./runtime');
 
 /**
  * @typedef {{status: number;body: any, cookie: string[], headers?: Record<string, string>}} UseAxiosResponse
@@ -26,11 +27,12 @@ const { appid, clientver, liteAppid, liteClientver } = require('./config.json');
  * @param {string?} options.realIP
  * @returns {Promise<UseAxiosResponse>}
  */
+
 const createRequest = (options) => {
   return new Promise(async (resolve, reject) => {
     const isLite = process.env.platform === 'lite';
     const dfid = options?.cookie?.dfid || '-'; // 自定义
-    const mid = cryptoMd5(dfid); // 可以自定义
+    const mid = `${cryptoMd5(dfid)}${cryptoMd5(dfid).slice(0, 7)}`; // 可以自定义
     const uuid = cryptoMd5(`${dfid}${mid}`); // 可以自定义
     const token = options?.cookie?.token || '';
     const userid = options?.cookie?.userid || 0;
@@ -65,7 +67,6 @@ const createRequest = (options) => {
 
     const data = typeof options?.data === 'object' ? JSON.stringify(options.data) : options?.data || '';
 
-
     if (!params['signature'] && !options.notSignature) {
       switch (options?.encryptType) {
         case 'register':
@@ -84,8 +85,12 @@ const createRequest = (options) => {
     // options.params = params;
     options['params'] = params;
     options['baseURL'] = options?.baseURL || 'https://gateway.kugou.com';
-    options['headers'] = Object.assign({ 'User-Agent': 'Android15-1070-11083-46-0-DiscoveryDRADProtocol-wifi' }, options?.headers || {}, { dfid, clienttime: params.clienttime, mid });
-    
+    options['headers'] = Object.assign({ 'User-Agent': 'Android15-1070-11083-46-0-DiscoveryDRADProtocol-wifi' }, options?.headers || {}, {
+      dfid,
+      clienttime: params.clienttime,
+      mid,
+    });
+
     const requestOptions = {
       params,
       data: options?.data,
@@ -96,6 +101,11 @@ const createRequest = (options) => {
       withCredentials: true,
       responseType: options.responseType,
     };
+
+    const proxyConfig = resolveProxy();
+    if (proxyConfig) {
+      requestOptions.proxy = proxyConfig;
+    }
 
     if (options.data) requestOptions.data = options.data;
     if (params) requestOptions.params = params;

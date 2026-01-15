@@ -33,8 +33,6 @@ async function login() {
   }
 
   if (api.killed) {
-    // 强制关闭进程
-    // 必须强制关闭，不然action不会停止
     process.exit(0)
   }
 }

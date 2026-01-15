@@ -31,22 +31,23 @@ async function main() {
       printMagenta(`账号 ${userDetail?.data?.nickname} 开始领取VIP...`)
 
       // 开始听歌
-      printYellow(`开始每日听歌领取VIP...`)
+      printYellow(`开始听歌领取VIP...`)
       // 听歌获取vip
       const listen = await send(`/youth/listen/song?timestrap=${Date.now()}`, "GET", headers)
 
       if (listen.status === 1) {
-        printGreen("每日听歌领取成功")
+        printGreen("听歌领取成功")
       } else {
         errorMsg[userDetail?.data?.nickname + " listen"] = listen
-        printRed("每日听歌领取失败")
+        printRed("听歌领取失败")
       }
 
       printYellow("开始领取VIP...")
       for (let i = 1; i <= 8; i++) {
-        // 签到获取vip
+        // ad获取vip
         const ad = await send(`/youth/vip?timestrap=${Date.now()}`, "GET", headers)
-
+        // 签到出现问题，每次都添加
+        errorMsg[`${userDetail?.data?.nickname} ad${i}`] = ad
         if (ad.status === 1) {
           printGreen(`第${i}次领取成功`)
           if (i != 8) {
@@ -54,7 +55,7 @@ async function main() {
           }
         } else {
           printRed(`第${i}次领取失败`)
-          errorMsg[userDetail?.data?.nickname + " ad"] = ad
+          // errorMsg[userDetail?.data?.nickname + " ad"] = ad
           break
         }
       }
@@ -78,8 +79,6 @@ async function main() {
   }
 
   if (api.killed) {
-    // 强制关闭进程
-    // 必须强制关闭，不然action不会停止
     process.exit(0)
   }
 }
