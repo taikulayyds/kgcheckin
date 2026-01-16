@@ -27,7 +27,7 @@ async function main() {
     // 开始签到
     for (const user of userinfo) {
       const headers = { 'cookie': 'token=' + user.token + '; userid=' + user.userid }
-      console.log(headers)
+      // console.log(headers)
       const userDetail = await send(`/user/detail?timestrap=${Date.now()}`, "GET", headers)
       if (userDetail?.data?.nickname == null) {
         printRed(`token过期或账号不存在, userid: ${user.userid}`)
