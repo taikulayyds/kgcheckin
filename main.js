@@ -51,15 +51,16 @@ async function main() {
       for (let i = 1; i <= 8; i++) {
         // ad获取vip
         const ad = await send(`/youth/vip?timestrap=${Date.now()}`, "GET", headers)
-        // 签到出现问题，每次都添加
-        errorMsg[`${userDetail?.data?.nickname} ad${i}`] = ad
+        // 签到出现问题
+        // errorMsg[`${userDetail?.data?.nickname} ad${i}`] = ad
         if (ad.status === 1) {
           printGreen(`第${i}次领取成功`)
           if (i != 8) {
             await delay(30 * 1000)
           }
         } else {
-          printRed(`第${i}次领取失败`)
+          printRed(`第${i}次领取失败，目前属于已知问题`)
+          console.dir(ad, { depth: null })
           // errorMsg[userDetail?.data?.nickname + " ad"] = ad
           break
         }
