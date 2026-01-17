@@ -35,6 +35,17 @@ async function main() {
       }
       printMagenta(`账号 ${userDetail?.data?.nickname} 开始领取VIP...`)
 
+      // 开始听歌
+      printYellow(`开始听歌领取VIP...`)
+      // 听歌获取vip
+      const listen = await send(`/youth/listen/song?timestrap=${Date.now()}`, "GET", headers)
+
+      if (listen.status === 1) {
+        printGreen("听歌领取成功")
+      } else {
+        errorMsg[userDetail?.data?.nickname + " listen"] = listen
+        printRed("听歌领取失败")
+      }
 
       printYellow("开始领取VIP...")
       for (let i = 1; i <= 8; i++) {
@@ -53,18 +64,6 @@ async function main() {
           // errorMsg[userDetail?.data?.nickname + " ad"] = ad
           break
         }
-      }
-
-      // 开始听歌
-      printYellow(`开始听歌领取VIP...`)
-      // 听歌获取vip
-      const listen = await send(`/youth/listen/song?timestrap=${Date.now()}`, "GET", headers)
-
-      if (listen.status === 1) {
-        printGreen("听歌领取成功")
-      } else {
-        errorMsg[userDetail?.data?.nickname + " listen"] = listen
-        printRed("听歌领取失败")
       }
 
       const vip_details = await send(`/user/vip/detail?timestrap=${Date.now()}`, "GET", headers)
