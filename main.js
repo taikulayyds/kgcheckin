@@ -42,6 +42,8 @@ async function main() {
 
       if (listen.status === 1) {
         printGreen("听歌领取成功")
+      } if (listen.error_code === 130012) {
+        printGreen("今日已领取")
       } else {
         errorMsg[userDetail?.data?.nickname + " listen"] = listen
         printRed("听歌领取失败")
@@ -58,6 +60,8 @@ async function main() {
           if (i != 8) {
             await delay(30 * 1000)
           }
+        } else if (ad.error_code === 30002) {
+          printGreen("今天次数已用光")
         } else {
           printRed(`第${i}次领取失败，目前属于已知问题`)
           console.dir(ad, { depth: null })
