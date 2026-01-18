@@ -40,7 +40,7 @@ async function main() {
       // 听歌获取vip
       const listen = await send(`/youth/listen/song?timestrap=${Date.now()}`, "GET", headers)
 
-      if (listen.status === 1 || listen.error_code === 130012) {
+      if (listen.status === 1) {
         printGreen("听歌领取成功")
       } else {
         errorMsg[userDetail?.data?.nickname + " listen"] = listen
@@ -50,63 +50,26 @@ async function main() {
       printYellow("开始领取VIP...")
       for (let i = 1; i <= 8; i++) {
         // ad获取vip
-        const ad = await send(`/youth/day/vip?timestrap=${Date.now()}`, "GET", headers)
+        const ad = await send(`/youth/vip?timestrap=${Date.now()}`, "GET", headers)
         // 签到出现问题
         // errorMsg[`${userDetail?.data?.nickname} ad${i}`] = ad
         if (ad.status === 1) {
           printGreen(`第${i}次领取成功`)
-          const upgrade = await send(`/youth/day/vip/upgrade?timestrap=${Date.now()}`, "GET", headers)
-          if (upgrade.status === 1 || upgrade.error_code === 297002 || upgrade.error_code === 297000) {
-            printGreen(`第${i}次升级成功`)
-          } else {
-            printRed(`第${i}次升级失败`)
-            errorMsg[userDetail?.data?.nickname + " upgrade" + i] = upgrade
+          if (i != 8) {
+            await delay(30 * 1000)
           }
-          break
-        } else if(ad.error_code === 131001) {
-          printGreen("今日已领取过VIP，尝试升级...")
-          const upgrade = await send(`/youth/day/vip/upgrade?timestrap=${Date.now()}`, "GET", headers)
-          if (upgrade.status === 1 || upgrade.error_code === 297002 || upgrade.error_code === 297000) {
-            printGreen(`已升级成概念VIP`)
-          } else {
-            printRed(`升级失败`)
-            errorMsg[userDetail?.data?.nickname + " upgrade"] = upgrade
-          }
-          break
         } else {
-          printRed(`第${i}次领取失败`)
+          printRed(`第${i}次领取失败，目前属于已知问题`)
           console.dir(ad, { depth: null })
           // errorMsg[userDetail?.data?.nickname + " ad"] = ad
           break
         }
       }
+
       const vip_details = await send(`/user/vip/detail?timestrap=${Date.now()}`, "GET", headers)
       if (vip_details.status === 1) {
         printBlue(`今天是：${date}`)
-        let tvipEndTime = null;
-        let svipEndTime = null;
-        if (vip_details.data.busi_vip && Array.isArray(vip_details.data.busi_vip)) {
-          for (const vipItem of vip_details.data.busi_vip) {
-            if (vipItem.product_type === 'tvip') {
-              tvipEndTime = vipItem.vip_end_time;
-            } else if (vipItem.product_type === 'svip') {
-              svipEndTime = vipItem.vip_end_time;
-            }
-          }
-        }
-        if (tvipEndTime) {
-          printBlue(`畅听VIP到期时间：${tvipEndTime}`)
-        } else {
-          printBlue(`未找到畅听VIP到期时间`)
-        }
-        if (svipEndTime) {
-          printBlue(`概念VIP到期时间：${svipEndTime}`)
-        } else {
-          printBlue(`未找到概念VIP到期时间`)
-        }
-        if (!tvipEndTime && !svipEndTime) {
-          printBlue(`未找到到期时间`)
-        }
+        printBlue(`VIP到期时间：${vip_details.data.busi_vip[0].vip_end_time}\n`)
       } else {
         printRed("获取失败\n")
         errorMsg[userDetail?.data?.nickname + " vip_details"] = vip_details
@@ -127,3 +90,4 @@ async function main() {
 }
 
 main()
+
