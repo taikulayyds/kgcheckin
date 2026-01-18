@@ -42,7 +42,7 @@ async function main() {
 
       if (listen.status === 1) {
         printGreen("听歌领取成功")
-      } if (listen.error_code === 130012) {
+      } else if (listen.error_code === 130012) {
         printGreen("今日已领取")
       } else {
         errorMsg[userDetail?.data?.nickname + " listen"] = listen
