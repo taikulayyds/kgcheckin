@@ -31,6 +31,9 @@ async function main() {
       const userDetail = await send(`/user/detail?timestrap=${Date.now()}`, "GET", headers)
       if (userDetail?.data?.nickname == null) {
         printRed(`token过期或账号不存在, userid: ${user.userid}`)
+        errorMsg[user.userid] = {
+          msg: `token过期或账号不存在, userid: ${user.userid}`
+        }
         continue
       }
       printMagenta(`账号 ${userDetail?.data?.nickname} 开始领取VIP...`)

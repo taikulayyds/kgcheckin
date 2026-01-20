@@ -69,8 +69,13 @@ async function qrcode() {
     }
     const userinfoJSON = JSON.stringify(userinfo)
     if (pat) {
-      execSync(`gh secret set USERINFO -b'${userinfoJSON}' --repo ${process.env.GITHUB_REPOSITORY}`);
-      console.log("secret <USERINFO> 更改成功")
+      try {
+        execSync(`gh secret set USERINFO -b'${userinfoJSON}' --repo ${process.env.GITHUB_REPOSITORY}`);
+        console.log("secret <USERINFO> 更改成功")
+      } catch (error) {
+        console.log("自动写入出错，登录信息如下，请手动添加到secret USERINFO")
+        console.log(userinfoJSON)
+      }
     } else {
       console.log("登录信息如下，把它添加到secret USERINFO 即可")
       console.log(userinfoJSON)
