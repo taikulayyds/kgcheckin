@@ -14,51 +14,47 @@ async function qrcode() {
   const args = process.argv.slice(2);
   const number = parseInt(process.env.NUMBER || args[0] || "1")
   const pat = process.env.PAT
+  
   try {
     for (let i = 0; i < number; i++) {
-      // 二维码
+      // 获取二维码接口
       const result = await send(`/login/qr/key?timestrap=${Date.now()}`, "GET", {})
       if (result.status === 1) {
         qrcode = result.data.qrcode
         const img_base64 = result.data.qrcode_img;
-        const chunkSize = 1000;
+        
         printMagenta("二维码链接如下, 请在浏览器打开使用APP扫描并确认登录")
-        for (let i = 0; i < img_base64.length; i += chunkSize) {
-          console.log(img_base64.slice(i, i + chunkSize));
-        }
+        console.log(img_base64);
       } else {
         printRed("响应内容")
         console.dir(result, { depth: null })
         throw new Error("请求出错")
       }
+      
       printMagenta("正在等待，请扫描二维码并确定登录")
-      // 登录
-      for (let i = 0; i < 25; i++) {
+      // 轮询检测扫码状态
+      for (let loopIdx = 0; loopIdx < 25; loopIdx++) {
         const timestrap = Date.now();
-        const res = await send(`/login/qr/check?key=${qrcode}&timestrap=${timestrap}`, "GET", {})
+        const res = await send(`/login/qr/key/check?key=${qrcode}&timestrap=${timestrap}`, "GET", {})
         const status = res?.data?.status
+        
         switch (status) {
           case 0:
             printYellow("二维码已过期")
             break
-
           case 1:
-            // console.log("未扫描二维码")
             break
-
           case 2:
-            // console.log("二维码未确认，请点击确认登录")
             break
           case 4:
             let userAlreadyExist = false
             printGreen("登录成功！")
             if (APPEND_USER == "是") {
-              for (let i = 0; i < userinfo.length; i++) {
-
-                if (userinfo[i].userid == res.data.userid) {
+              for (let item of userinfo) {
+                if (item.userid == res.data.userid) {
                   userAlreadyExist = true
-                  printYellow(`userid: ${userinfo[i].userid} 此账号已存在, 仅更新登录信息`)
-                  userinfo[i].token = res.data.token
+                  printYellow(`userid: ${item.userid} 此账号已存在, 仅更新登录信息`)
+                  item.token = res.data.token
                 }
               }
             }
@@ -73,16 +69,18 @@ async function qrcode() {
             printRed("请求出错")
             console.dir(res, { depth: null })
         }
-        if (status == 4 || status == 0) {
+        
+        if (status === 4 || status === 0) {
           break
         }
-        if (i == 24) {
+        if (loopIdx === 24) {
           printRed("等待超时\n")
           break
         }
         await delay(5000)
       }
     }
+
     if (userinfo.length) {
       const userinfoJSON = JSON.stringify(userinfo)
       if (pat) {
